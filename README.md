@@ -1,6 +1,39 @@
 # Stable Diffusion web UI
 A web interface for Stable Diffusion, implemented using Gradio library.
 
+## Add by Author pingyuorid
+苹果M3安装参考
+- 原操作
+If Homebrew is not installed, follow the instructions at https://brew.sh to install it. Keep the terminal window open and follow the instructions under "Next steps" to add Homebrew to your PATH.
+Open a new terminal window and run brew install cmake protobuf rust python@3.10 git wget
+Clone the web UI repository by running git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui
+Place Stable Diffusion models/checkpoints you want to use into stable-diffusion-webui/models/Stable-diffusion. If you don't have any, see Downloading Stable Diffusion Models below.
+cd stable-diffusion-webui and then ./webui.sh to run the web UI. A Python virtual environment will be created and activated using venv and any remaining missing dependencies will be automatically downloaded and installed.
+To relaunch the web UI process later, run ./webui.sh again. Note that it doesn't auto update the web UI; to update, run git pull before running ./webui.sh.
+
+- 几点额外操作和说明
+因为担心python包之间兼容性问题，建议安装anaconda安装和管理python
+安装好arm64版本的anaconda后，先创建一个新环境，在terminal中输入
+conda create -n EnvName python=3.10
+中间的EnvName为环境名称，可以自己设置
+然后激活这个环境：
+conda activate EnvName
+
+- 因为脚本中pip install torch==2.3.1 torchvision==0.18.1查找不到2.3.1，会报错，如下
+/*
+Python 3.10.15 (main, Sep 7 2024, 00:20:06) [Clang 16.0.0 (clang-1600.0.26.3)]
+Version: v1.10.1
+Commit hash: 82a973c04367123ae98bd9abdf80d9eda9b910e2
+Installing torch and torchvision
+ERROR: Could not find a version that satisfies the requirement torch==2.3.1 (from versions: 1.11.0, 1.12.0, 1.12.1, 1.13.0, 1.13.1, 2.0.0, 2.0.1, 2.1.0, 2.1.1, 2.1.2, 2.2.0, 2.2.1, 2.2.2)
+*/
+所以修改了webui.sh和webui-macos-env.sh的源码，不自动下载torch。源码已修改完成
+在运行脚本前手动使用conda安装torch，
+/*
+conda install pytorch torchvision -c pytorch
+*/
+ 
+
 ![](screenshot.png)
 
 ## Features
